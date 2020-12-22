@@ -19,9 +19,8 @@ create table ers_reimbursement_type(
 		or reimb_type like 'FOOD' or reimb_type like 'OTHER') not null
 );
 
-
 create table ers_user_roles(
-ers_user_role_id serial primary key,
+user_role_id serial primary key,
 user_role text 
 	check (user_role like 'EMPLOYEE' or user_role like 'FINANCE_MANGER') not null
 );
@@ -34,7 +33,7 @@ create table ers_users(
 	user_first_name text not null,
 	user_last_name text not null,
 	user_email text unique not null,
-	user_role_id integer references ers_user_roles(ers_user_role_id) not null,
+	user_role_id integer references ers_user_roles(user_role_id) not null,
 	unique(ers_username, user_email)
 );
 
@@ -45,9 +44,63 @@ create table ers_reimbursement(
 	reimb_subitted timestamp not null,
 	reimb_resolved timestamp,
 	reimb_description text,
-	reimb_receipt text,
+--	reimb_receipt oid,
 	reimb_author integer references ers_users(ers_users_id) not null,
---	reimb_resolver integer references ers_users(ers_users_id),
+	reimb_resolver integer references ers_users(ers_users_id),
 	reimb_status_id integer references ers_reimbursement_status(reimb_status_id) not null,
 	reimb_type_id integer references ers_reimbursement_type(reimb_type_id) not null
 );
+
+insert into ers_reimbursement_status(reimb_status)
+	values('PENDING'),
+	('APPROVED'),
+	('DENIED');
+
+insert into ers_reimbursement_type(reimb_type)
+	values('LODGING'),
+	('TRAVEL'),
+	('FOOD'),
+	('OTHER');
+	
+insert into ers_user_roles(user_role)
+	values('EMPLOYEE'),
+	('FINANCE_MANGER');
+
+insert into ers_users(
+	ers_username,
+	ers_password,
+	user_first_name,
+	user_last_name,
+	user_email,
+	user_role_id
+	)
+	values(
+	'colin',
+	's',
+	'colin',
+	'shaw',
+	'c.s@mail.ca',
+	1)
+	;
+
+insert into ers_reimbursement(	
+	reimb_amount,
+	reimb_subitted,
+	reimb_resolved,
+	reimb_description,
+	reimb_author,
+	reimb_resolver,
+	reimb_status_id,
+	reimb_type_id
+	)
+	values(	
+	1000.59,
+	current_timestamp,
+	null,
+	'reimb_description blah blah blah',
+	1,
+	null,
+	1,
+	2
+	)
+	;

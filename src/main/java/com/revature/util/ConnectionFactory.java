@@ -26,7 +26,6 @@ public class ConnectionFactory {
 				Connection c = DriverManager.getConnection(url, username, password);
 				this.conns[i]  = c;
 			}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
