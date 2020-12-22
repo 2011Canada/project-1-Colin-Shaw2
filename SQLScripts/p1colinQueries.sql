@@ -25,7 +25,30 @@ using (user_role_id)
 --on ers_users.user_role_id = ers_user_roles.ers_user_role_id
 where (ers_username like 'colin' and ers_password like 's');
 
-select reimb_id, reimb_amount, reimb_subitted, reimb_resolved, reimb_description, reimb_author, reimb_resolver, reimb_status, reimb_type from ers_reimbursement
+select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
+reimb_author, reimb_resolver, reimb_status, reimb_type 
+from ers_reimbursement
 join ers_reimbursement_status using (reimb_status_id)
 join ers_reimbursement_type using (reimb_type_id)
 ;
+
+select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
+reimb_author, reimb_resolver, reimb_status, reimb_type 
+from ers_reimbursement
+join ers_reimbursement_status using (reimb_status_id)
+join ers_reimbursement_type using (reimb_type_id)
+where reimb_status like 'PENDING'
+;
+
+select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
+reimb_author, reimb_resolver, reimb_status, reimb_type 
+from ers_reimbursement
+join ers_reimbursement_status using (reimb_status_id)
+join ers_reimbursement_type using (reimb_type_id)
+where reimb_author=1
+;
+
+insert into ers_reimbursement 
+	values(default, 200.59, current_timestamp, null, 'second reimbursement', 1, null, 
+(select reimb_status_id from ers_reimbursement_status where reimb_status like 'PENDING'), 
+(select reimb_type_id from ers_reimbursement_type where reimb_type like 'LODGING'));

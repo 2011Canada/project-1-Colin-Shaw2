@@ -41,7 +41,7 @@ create table ers_users(
 create table ers_reimbursement(
 	reimb_id serial primary key,
 	reimb_amount numeric(12,2) not null,
-	reimb_subitted timestamp not null,
+	reimb_submitted timestamp not null,
 	reimb_resolved timestamp,
 	reimb_description text,
 --	reimb_receipt oid,
@@ -85,7 +85,7 @@ insert into ers_users(
 
 insert into ers_reimbursement(	
 	reimb_amount,
-	reimb_subitted,
+	reimb_submitted,
 	reimb_resolved,
 	reimb_description,
 	reimb_author,

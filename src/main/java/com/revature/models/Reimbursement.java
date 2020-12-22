@@ -1,6 +1,6 @@
 package com.revature.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import com.revature.enums.ReimbursementStatus;
 import com.revature.enums.ReimbursementType;
@@ -9,16 +9,17 @@ public class Reimbursement {
 	
 	private int id;
 	private double amount;
-	private Date submitted;
-	private Date resolved;
+	private Timestamp submitted;
+	private Timestamp resolved;
 	private String description;
-	private int authorID;
+	private Integer authorID;
+	private Integer resolverID;
 	private ReimbursementStatus status;
 	private ReimbursementType type;
 	
 	
-	public Reimbursement(int id, double amount, Date submitted, Date resolved, String description, int authorID,
-			ReimbursementStatus status, ReimbursementType type) {
+	public Reimbursement(int id, double amount, Timestamp submitted, Timestamp resolved, String description, Integer authorID,
+			Integer resolverID, ReimbursementStatus status, ReimbursementType type) {
 		super();
 		this.id = id;
 		this.amount = amount;
@@ -26,6 +27,7 @@ public class Reimbursement {
 		this.resolved = resolved;
 		this.description = description;
 		this.authorID = authorID;
+		this.resolverID = resolverID;
 		this.status = status;
 		this.type = type;
 	}
@@ -47,11 +49,18 @@ public class Reimbursement {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getAuthorID() {
+	public Integer getAuthorID() {
 		return authorID;
 	}
 	public void setAuthorID(int authorID) {
 		this.authorID = authorID;
+	}
+
+	public Integer getResolverID() {
+		return resolverID;
+	}
+	public void setResolverID(int resolverID) {
+		this.resolverID = resolverID;
 	}
 	public ReimbursementType getType() {
 		return type;
@@ -59,10 +68,10 @@ public class Reimbursement {
 	public void setType(ReimbursementType type) {
 		this.type = type;
 	}
-	public Date getSubmitted() {
+	public Timestamp getSubmitted() {
 		return submitted;
 	}
-	public Date getResolved() {
+	public Timestamp getResolved() {
 		return resolved;
 	}
 	public ReimbursementStatus getStatus() {
