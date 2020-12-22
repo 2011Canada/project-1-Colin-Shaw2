@@ -17,7 +17,7 @@ public class DAODebuggerP1 {
 	public static void main(String[] args) {
 		UserDAO userDAO = new UserPostgresDAO();
 		ReimbursementDAO reimDAO = new ReimbursementPostgresDAO();
-		Reimbursement r = new Reimbursement(200, 300.59, new Timestamp(System.currentTimeMillis()), null, "debug reimbursement", 1, null, 
+		Reimbursement r = new Reimbursement(1, 300.59, new Timestamp(System.currentTimeMillis()), null, "debug reimbursement", 1, null, 
 				ReimbursementStatus.PENDING, ReimbursementType.OTHER);
 		
 		try {
@@ -25,7 +25,8 @@ public class DAODebuggerP1 {
 //			System.out.println(u);
 //			System.out.println(reimDAO.getAllReimbursements());
 //			System.out.println(reimDAO.getAllReimbursementsByStatus(ReimbursementStatus.PENDING));
-			System.out.println(reimDAO.addReimbursement(r));
+//			System.out.println(reimDAO.addReimbursement(r));
+//			System.out.println(reimDAO.updateReimbursementStatus(r));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

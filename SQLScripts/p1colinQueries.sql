@@ -51,4 +51,17 @@ where reimb_author=1
 insert into ers_reimbursement 
 	values(default, 200.59, current_timestamp, null, 'second reimbursement', 1, null, 
 (select reimb_status_id from ers_reimbursement_status where reimb_status like 'PENDING'), 
-(select reimb_type_id from ers_reimbursement_type where reimb_type like 'LODGING'));
+(select reimb_type_id from ers_reimbursement_type where reimb_type like 'LODGING'))
+returning reimb_id;
+
+update ers_reimbursement 
+set	
+	reimb_amount = 40.44,
+	reimb_submitted = current_timestamp,
+	reimb_resolved = null,
+	reimb_description = 'updated reimbursement',
+	reimb_author = 1,
+	reimb_resolver = null,
+	reimb_status_id = (select reimb_status_id from ers_reimbursement_status where reimb_status like 'PENDING'),
+	reimb_type_id =(select reimb_type_id from ers_reimbursement_type where reimb_type like 'LODGING')
+where reimb_id=1;

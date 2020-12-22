@@ -97,8 +97,37 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 	}
 
 	public Reimbursement updateReimbursementStatus(Reimbursement reimbursement) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = cf.getConnection();
+
+		String sql = "update ers_reimbursement "
+				+ "set	"
+				+ "	reimb_amount = ?, "
+				+ "	reimb_submitted = ?, "
+				+ "	reimb_resolved = ?, "
+				+ "	reimb_description = ?, "
+				+ "	reimb_author = ?, "
+				+ "	reimb_resolver = ?, "
+				+ "	reimb_status_id = (select reimb_status_id from ers_reimbursement_status where reimb_status like ?), "
+				+ "	reimb_type_id =(select reimb_type_id from ers_reimbursement_type where reimb_type like ?) "
+				+ "where reimb_id=?;";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setDouble(1, reimbursement.getAmount());
+		statement.setTimestamp(2, reimbursement.getSubmitted());
+		statement.setTimestamp(3, reimbursement.getResolved());
+		statement.setString(4, reimbursement.getDescription());
+		statement.setInt(5, reimbursement.getAuthorID());
+		if(reimbursement.getResolverID() == null) {
+			statement.setNull(6, Types.BIGINT);
+		}else {
+			statement.setInt(6, reimbursement.getResolverID());
+		}
+		statement.setString(7, reimbursement.getStatus().toString());
+		statement.setString(8, reimbursement.getType().toString());
+		statement.setInt(9, reimbursement.getId());
+		
+		statement.executeUpdate();
+		
+		return reimbursement;
 	}
 
 	public Reimbursement addReimbursement(Reimbursement reimbursement) throws SQLException {
