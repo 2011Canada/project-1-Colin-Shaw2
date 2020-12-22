@@ -77,6 +77,20 @@ public class Reimbursement {
 	public ReimbursementStatus getStatus() {
 		return status;
 	}
+	public void approveReimbursement() {
+		//TODO throw new error
+		if(status != ReimbursementStatus.PENDING) {
+			return;
+		}
+		status = ReimbursementStatus.APPROVED;
+	}
+	public void declineReimbursement() {
+		//TODO throw new error
+		if(status != ReimbursementStatus.PENDING) {
+			return;
+		}
+		status = ReimbursementStatus.DENIED;
+	}
 	
 	@Override
 	public int hashCode() {
