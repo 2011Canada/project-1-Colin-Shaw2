@@ -1,14 +1,3 @@
-// let loginButton = document.getElementById("btn-login")
-
-// let loginCard = document.getElementById("login-form")
-
-// console.log(loginCard)
-
-// loginButton.addEventListener("click", () =>{
-//     loginCard.parentElement.removeChild(loginCard);
-//     }
-// )
-
 async function getTransactionsForEmployee(employee){
     
 }
@@ -21,11 +10,17 @@ async function getCurrentUser(username, password){
 async function sendNewReimbursementRequest(reimbursement){
 }
 
-function submitReimbursement(amount, expenseType, description){
-    console.log(document.getElementById("amountInput").value)
-    console.log(document.getElementById("expenseTypeSelect").value)
-    console.log(document.getElementById("descriptionInput").value)
-    alert(amount + expenseType + description)
+function submitReimbursement(){
+    let amount =document.getElementById("amountInput").value
+    let expenseType = document.getElementById("expenseTypeSelect").value
+    let description = document.getElementById("descriptionInput").value
+    
+    let reimbursement = {
+        amount,
+        expenseType,
+        description
+    }
+    console.log(reimbursement)
 }
 
 let currentUser = getCurrentUser()
@@ -33,7 +28,10 @@ let currentUser = getCurrentUser()
 
 // let listOfTransactions = getTransactionsForEmployee(currentEmployee)
 
-let submitReimbursementButton = document.getElementById("reimbursementForm")
+let reimbursementForm = document.getElementById("reimbursementForm")
 
-submitReimbursementButton.addEventListener("submit",  submitReimbursement)
-
+reimbursementForm.addEventListener("submit", (event) =>{
+    event.preventDefault()
+    submitReimbursement()
+}
+)

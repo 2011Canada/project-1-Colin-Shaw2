@@ -1,19 +1,18 @@
-async function getAllTransactions() {}
 
-async function getAllTransactionsWithStaus(status) {
+async function getAllTransactionsWithStatus(status) {
   if (status !== "PENDING" || status !== "APPROVED" || status !== "DENIED") {
     throw `incorrect status passed in :${status}
-            Expected "PENDING", "APPROVED", "DENIED"`;
+    Expected "PENDING", "APPROVED", "DENIED"`;
   }
-
 }
+async function getAllTransactions() {}
 
-async function getCurrentUser(username, password) {}
 
-async function approveReimbursement(reimbursement) {}
+let filterForm = document.getElementById("filterForm")
 
-async function denyReimbursement(reimbursement) {}
-
-let currentUser = getCurrentUser()
-
-let listOfTransactions = queryTransactionsForEmployee(currentEmployee)
+filterForm.addEventListener("submit", (event) =>{
+  event.preventDefault()
+  let status = document.getElementById("filterSelect")
+  console.log(status)
+  }
+  )
