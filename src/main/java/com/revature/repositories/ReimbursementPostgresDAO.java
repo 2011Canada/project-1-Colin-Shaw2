@@ -19,7 +19,9 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 	private static ConnectionFactory cf = ConnectionFactory.getConnectionFactory();
 	
 	public List<Reimbursement> getAllReimbursements() throws SQLException {
+		System.out.println("getting all reimburser");
 		Connection conn = cf.getConnection();
+		System.out.println("got conn");
 		List<Reimbursement> reimbursementList = new ArrayList<>();
 		String sql = "select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
 				+ "reimb_author, reimb_resolver, reimb_status, reimb_type from ers_reimbursement "
