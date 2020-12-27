@@ -12,21 +12,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.exceptions.UnauthenticatedException;
 import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Reimbursement;
+import com.revature.models.User;
+import com.revature.services.EmployeeServiceImplementation;
+import com.revature.services.EmployeeServiceInterface;
 import com.revature.services.FinanceManagerServiceImplementation;
 import com.revature.services.FinanceManagerServiceInterface;
 
-public class UserController {
+public class EmployeeController {
 
-	private FinanceManagerServiceInterface FMService = new FinanceManagerServiceImplementation();
+	private EmployeeServiceInterface empService = new EmployeeServiceImplementation();
 	
 	private ObjectMapper om = new ObjectMapper();
 	
 
-	public void findAllUsers(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void findAllUserReimbursements(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		
-		System.out.println("getting sesstion");
+		System.out.println("getting session");
 		HttpSession sess = req.getSession();
 		
+		System.out.println(sess.getAttribute("user"));
 //		if(sess.getAttribute("User-Role") == null) {
 //			throw new UnauthenticatedException();
 //		} else if(!sess.getAttribute("User-Role").equals("Admin")) {
@@ -35,7 +39,7 @@ public class UserController {
 		List<Reimbursement> allReimbursement = null;
 		System.out.println("service controller");
 		try {
-			allReimbursement = FMService.viewAllReimbursements();
+			allReimbursement = empService.viewPastTickets((User)sess.getAttribute("user"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

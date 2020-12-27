@@ -39,6 +39,8 @@ public class AuthController {
 		}else if(u.getRole() == UserRole.FINANCE_MANAGER) {
 			sess.setAttribute("User-Role", "FINANCE_MANAGER");		
 		}
+		sess.setAttribute("user", u);
+		
 		
 		res.setStatus(200);
 		res.getWriter().write(om.writeValueAsString(u));

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.revature.controllers.AuthController;
 import com.revature.controllers.ErrorController;
-import com.revature.controllers.UserController;
+import com.revature.controllers.EmployeeController;
 
 //import com.revature.controllers.AuthController;
 //import com.revature.controllers.ErrorController;
@@ -26,7 +26,7 @@ public class FrontController extends HttpServlet {
 	
 	private ErrorController errorController = new ErrorController();
 	
-	private UserController userController = new UserController();
+	private EmployeeController userController = new EmployeeController();
 
 	protected void directControlRouter(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		//how to get a value from your init params
@@ -73,13 +73,13 @@ public class FrontController extends HttpServlet {
 				}
 				break;
 			}
-			case "/users": {
+			case "/reimbursements/user": {
 				switch (req.getMethod()) {
 					case "GET":{
 						System.out.println("in user get");
-						userController.findAllUsers(req, res);
-						res.setStatus(400);
-						res.getWriter().write("Method Not Supported");
+						userController.findAllUserReimbursements(req, res);
+//						res.setStatus(400);
+//						res.getWriter().write("Method Not Supported");
 						break;
 					}
 					case "POST":{
