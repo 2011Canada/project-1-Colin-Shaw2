@@ -71,6 +71,7 @@ protected void doPost(HttpServletRequest req, HttpServletResponse res) throws Se
 		try {
 			r = om.readValue(req.getInputStream(), Reimbursement.class);
 			r.setAuthorID(u.getUserId());
+			System.out.println(r);
 			r = empService.addReimbursementRequest(u, r);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

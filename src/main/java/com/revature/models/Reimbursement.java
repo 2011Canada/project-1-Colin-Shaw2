@@ -20,6 +20,7 @@ public class Reimbursement {
 	public Reimbursement() {
 		this.id = -1;
 		this.resolved = null;
+		this.submitted = new Timestamp(System.currentTimeMillis());
 		this.description = null;
 		this.resolverID = null;
 		this.status = ReimbursementStatus.PENDING;

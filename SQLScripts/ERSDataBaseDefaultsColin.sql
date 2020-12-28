@@ -22,7 +22,7 @@ create table ers_reimbursement_type(
 create table ers_user_roles(
 user_role_id serial primary key,
 user_role text 
-	check (user_role like 'EMPLOYEE' or user_role like 'FINANCE_MANGER') not null
+	check (user_role like 'EMPLOYEE' or user_role like 'FINANCE_MANAGER') not null
 );
 
 
@@ -64,7 +64,7 @@ insert into ers_reimbursement_type(reimb_type)
 	
 insert into ers_user_roles(user_role)
 	values('EMPLOYEE'),
-	('FINANCE_MANGER');
+	('FINANCE_MANAGER');
 
 insert into ers_users(
 	ers_username,
