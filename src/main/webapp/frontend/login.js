@@ -15,10 +15,8 @@ async function loginSubmit(event){
             method:"POST",
             body: JSON.stringify(credentials),
             headers:{
-                // "Access-Control-Allow-Origin" : "*",
                 "Content-Type" : "application/json"
             },
-            // credentials: 'include'
         })
         
         let user = await res.json()

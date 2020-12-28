@@ -2,35 +2,28 @@
 async function submitReimbursement(event){
     event.preventDefault()
     let amount =document.getElementById("amountInput").value
-    let expenseType = document.getElementById("expenseTypeSelect").value
+    let type = document.getElementById("expenseTypeSelect").value
     let description = document.getElementById("descriptionInput").value
     
     const reimbursement = {
         amount,
-        expenseType,
+        type,
         description
     }
     console.log(reimbursement)
     
     try{
-        let res = await fetch("http://localhost:8080/p1colin/login", {
+        let res = await fetch("http://localhost:8080/p1colin/reimbursements/submit", {
             method:"POST",
-            body: JSON.stringify(credentials),
+            body: JSON.stringify(reimbursement),
             headers:{
                 "Content-Type" : "application/json"
             }
         })
         
-        let user = await res.json()
-        console.log(user);
+        let reimbursement = await res.json()
+        console.log(reimbursement);
 
-        if(user.role === "EMPLOYEE"){
-            document.location.href = "employeeHomeScreen.html"
-        }else if(user.role === "FINANCE_MANAGER"){
-            document.location.href = "financeManager.html"
-        }else{
-            console.log("error")
-        }
     } catch (e) {
         console.log(e);
     }
@@ -38,15 +31,6 @@ async function submitReimbursement(event){
 
 async function getAllTickets(event){
     event.preventDefault()
-    // let username = document.getElementById("username").value
-    // let password = document.getElementById("password").value
-    
-    // const credentials = {
-    //     username,
-    //     password
-    // }
-    
-    // console.log(reimbursement)
     
     try{
         let res = await fetch("http://localhost:8080/p1colin/reimbursements/user", {
@@ -54,17 +38,17 @@ async function getAllTickets(event){
             headers:{
                 "Content-Type" : "application/json"
             },
-            // credentials: 'same-origin'
         })
         
         let reimbursements = await res.json()
         console.log(reimbursements);
+        
 
-        reimbursements.array.forEach(element => {
-            let lu = document.createElement(element.amount)
-            lu.innerText = "123"
-            document.getElementById("reimbursementList").appendChild(
-            )
+        reimbursements.forEach(element => {
+            let lu = document.createElement('lu')
+            lu.innerText = element.amount
+            lu.className = "list-group-item"
+            document.getElementById("reimbursementList").appendChild(lu)
         });
     } catch (e) {
         console.log(e);
@@ -72,5 +56,8 @@ async function getAllTickets(event){
 }
 
 
-document.getElementById("reimbursementForm").addEventListener("submit", getAllTickets)
-// getAllTickets()
+document.getElementById("reimbursementForm").addEventListener("submit", submitReimbursement)
+
+
+document.getElementById("getTickets").addEventListener("click", getAllTickets)
+

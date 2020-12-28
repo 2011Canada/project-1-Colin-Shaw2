@@ -80,7 +80,28 @@ insert into ers_users(
 	'colin',
 	'shaw',
 	'c.s@mail.ca',
-	1)
+	1),
+	(
+	'mike',
+	's',
+	'micheal',
+	'sw',
+	'm.s@mail.ca',
+	1),
+	(
+	'eric',
+	'o',
+	'eric',
+	'os',
+	'e.o@mail.ca',
+	2),
+	(
+	'dave',
+	'd',
+	'dave',
+	'da',
+	'd.d@mail.ca',
+	2)
 	;
 
 insert into ers_reimbursement(	

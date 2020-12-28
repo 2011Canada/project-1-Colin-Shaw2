@@ -31,7 +31,6 @@ public class EmployeeController {
 		System.out.println("getting session");
 		HttpSession sess = req.getSession(false);		
 		System.out.println(sess);
-		System.out.println(req.getParameter("JSESSIONID"));
 //		if(sess.getAttribute("User-Role") == null) {
 //			throw new UnauthenticatedException();
 //		} else if(!sess.getAttribute("User-Role").equals("Admin")) {

@@ -17,6 +17,13 @@ public class Reimbursement {
 	private ReimbursementStatus status;
 	private ReimbursementType type;
 	
+	public Reimbursement() {
+		this.id = -1;
+		this.resolved = null;
+		this.description = null;
+		this.resolverID = null;
+		this.status = ReimbursementStatus.PENDING;
+	}
 	
 	public Reimbursement(int id, double amount, Timestamp submitted, Timestamp resolved, String description, Integer authorID,
 			Integer resolverID, ReimbursementStatus status, ReimbursementType type) {
