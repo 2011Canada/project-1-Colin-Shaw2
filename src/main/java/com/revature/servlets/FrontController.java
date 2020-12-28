@@ -30,15 +30,15 @@ public class FrontController extends HttpServlet {
 
 	protected void directControlRouter(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		//how to get a value from your init params
-		System.out.println(this.getInitParameter("DefaultRole"));
-		ServletContext sc = this.getServletContext();
-		
-		System.out.println(sc.getInitParameter("JavaCoolFactor"));
-		
+//		System.out.println(this.getInitParameter("DefaultRole"));
+//		ServletContext sc = this.getServletContext();
+//		
+//		System.out.println(sc.getInitParameter("JavaCoolFactor"));
+//		
 		//be our front controller
 		String URI = req.getRequestURI().substring(req.getContextPath().length(), 
 													req.getRequestURI().length());
-		
+//		res.addHeader("Access-Control-Allow-Origin", "*");
 		System.out.println(URI);
 		switch (URI) {
 			case "/login":{

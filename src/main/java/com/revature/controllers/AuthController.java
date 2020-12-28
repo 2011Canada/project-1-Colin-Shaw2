@@ -40,6 +40,7 @@ public class AuthController {
 			sess.setAttribute("User-Role", "FINANCE_MANAGER");		
 		}
 		sess.setAttribute("user", u);
+		System.out.println(sess.getId());
 		
 		
 		res.setStatus(200);

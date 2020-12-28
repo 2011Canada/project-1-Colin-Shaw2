@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +29,9 @@ public class EmployeeController {
 	public void findAllUserReimbursements(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		
 		System.out.println("getting session");
-		HttpSession sess = req.getSession();
-		
-		System.out.println(sess.getAttribute("user"));
+		HttpSession sess = req.getSession(false);		
+		System.out.println(sess);
+		System.out.println(req.getParameter("JSESSIONID"));
 //		if(sess.getAttribute("User-Role") == null) {
 //			throw new UnauthenticatedException();
 //		} else if(!sess.getAttribute("User-Role").equals("Admin")) {
@@ -45,6 +46,10 @@ public class EmployeeController {
 			e.printStackTrace();
 		}
 		res.setStatus(200);
+//		res.addHeader("Content-Type", "application/json");
+		if( allReimbursement == null) {
+			allReimbursement = new ArrayList<>();
+		}
 		res.getWriter().write(om.writeValueAsString(allReimbursement));
 		
 	}
