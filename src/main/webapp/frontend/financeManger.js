@@ -16,6 +16,7 @@ async function getAllTicketsByStatus(event){
         console.log(reimbursements);
         
 
+        document.getElementById("reimbursementList").innerHTML = ""
         reimbursements.forEach(element => {
             let li = document.createElement('li')
             li.innerText = element.amount
@@ -58,10 +59,9 @@ async function getAllTicketsByStatus(event){
                 event.preventDefault()
                 console.log(event.target.parentElement)
 
-                // console.log(reimbursement)
-                let res = await fetch("http://localhost:8080/p1colin/manager/declinereq", {
+                
+                let res = await fetch("http://localhost:8080/p1colin/manager/denyreq", {
                     method:"POST",
-                    // body: `reimbursementid=1`,
                     body: `reimbursementid=${event.target.parentElement.dataset.id}`,
                     headers:{
                         "Content-Type" : "application/json"

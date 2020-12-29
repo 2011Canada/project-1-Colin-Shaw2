@@ -5,17 +5,17 @@ async function submitReimbursement(event){
     let type = document.getElementById("expenseTypeSelect").value
     let description = document.getElementById("descriptionInput").value
     
-    const reimbursement = {
+    let newReimbursement = {
         amount,
         type,
         description
     }
-    console.log(reimbursement)
+    console.log(newReimbursement)
     
     try{
         let res = await fetch("http://localhost:8080/p1colin/reimbursements/submit", {
             method:"POST",
-            body: JSON.stringify(reimbursement),
+            body: JSON.stringify(newReimbursement),
             headers:{
                 "Content-Type" : "application/json"
             }
@@ -43,7 +43,7 @@ async function getAllTickets(event){
         let reimbursements = await res.json()
         console.log(reimbursements);
         
-
+        document.getElementById("reimbursementList").innerHTML = ""
         reimbursements.forEach(element => {
             let lu = document.createElement('lu')
             lu.innerText = element.amount
