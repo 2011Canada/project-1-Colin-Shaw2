@@ -1,5 +1,8 @@
 async function loginSubmit(event){
-    
+    //TODO
+    //make tickets more informative
+    //fix spacing with csss
+    //make buttons not look trash
     event.preventDefault();
     
     let username = document.getElementById("username").value
