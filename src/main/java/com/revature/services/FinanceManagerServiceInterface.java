@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.revature.enums.ReimbursementStatus;
 import com.revature.models.Reimbursement;
+import com.revature.models.User;
 
 public interface FinanceManagerServiceInterface extends UserServiceInterface {
 
@@ -13,8 +14,12 @@ public interface FinanceManagerServiceInterface extends UserServiceInterface {
 
 	List<Reimbursement> viewAllReimbursementsByStatus(ReimbursementStatus status) throws SQLException;
 
-	Reimbursement approveReimbursement(Reimbursement reimbursement) throws SQLException;
+	Reimbursement approveReimbursement(Reimbursement reimbursement, User resolver) throws SQLException;
+	
+	Reimbursement approveReimbursement(int reimID, User resolver) throws SQLException;
 
-	Reimbursement denyReimbursement(Reimbursement reimbursement) throws SQLException;
+	Reimbursement denyReimbursement(Reimbursement reimbursement, User resolver) throws SQLException;
+	
+	Reimbursement denyReimbursement(int reimID, User resolver) throws SQLException;
 
 }

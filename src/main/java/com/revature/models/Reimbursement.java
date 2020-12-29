@@ -79,6 +79,9 @@ public class Reimbursement {
 	public Timestamp getSubmitted() {
 		return submitted;
 	}
+	public void setResolved(Timestamp time) {
+		this.resolved = time;
+	}
 	public Timestamp getResolved() {
 		return resolved;
 	}

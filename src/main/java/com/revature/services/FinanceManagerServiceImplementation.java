@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.revature.enums.ReimbursementStatus;
@@ -32,15 +33,29 @@ public class FinanceManagerServiceImplementation implements FinanceManagerServic
 	}
 
 	@Override
-	public Reimbursement approveReimbursement(Reimbursement reimbursement) throws SQLException {
+	public Reimbursement approveReimbursement(Reimbursement reimbursement, User resolver) throws SQLException {
 		reimbursement.approveReimbursement();
+		reimbursement.setResolverID(resolver.getUserId());
+		reimbursement.setResolved(new Timestamp(System.currentTimeMillis()));
+		return reimDAO.updateReimbursementStatus(reimbursement);
+	}
+	
+	@Override
+	public Reimbursement approveReimbursement(int reimID, User resolver) throws SQLException {
+		return approveReimbursement(reimDAO.getAllReimbursementsByID(reimID), resolver);
+	}
+
+	@Override
+	public Reimbursement denyReimbursement(Reimbursement reimbursement, User resolver) throws SQLException {
+		reimbursement.declineReimbursement();
+		reimbursement.setResolverID(resolver.getUserId());
+		reimbursement.setResolved(new Timestamp(System.currentTimeMillis()));
 		return reimDAO.updateReimbursementStatus(reimbursement);
 	}
 
 	@Override
-	public Reimbursement denyReimbursement(Reimbursement reimbursement) throws SQLException {
-		reimbursement.declineReimbursement();
-		return reimDAO.updateReimbursementStatus(reimbursement);
+	public Reimbursement denyReimbursement(int reimID, User resolver) throws SQLException {
+		return denyReimbursement(reimDAO.getAllReimbursementsByID(reimID), resolver);
 	}
 
 }

@@ -161,4 +161,30 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 		return reimbursement;
 	}
 
+	@Override
+	public Reimbursement getAllReimbursementsByID(int reimID) throws SQLException {
+		Connection conn = cf.getConnection();
+		String sql = "select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
+				+ "reimb_author, reimb_resolver, reimb_status, reimb_type "
+				+ "from ers_reimbursement "
+				+ "join ers_reimbursement_status using (reimb_status_id) "
+				+ "join ers_reimbursement_type using (reimb_type_id) "
+				+ "where reimb_id=? "
+				+ ";";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setInt(1, reimID);
+		ResultSet res = statement.executeQuery();
+
+		if(!res.next()) {
+			throw new SQLException();
+		}
+		
+		Reimbursement reimbursement = new Reimbursement(res.getInt("reimb_id"), res.getDouble("reimb_amount"), 
+					res.getTimestamp("reimb_submitted"), res.getTimestamp("reimb_resolved"), res.getString("reimb_description"), 
+					res.getInt("reimb_author"), res.getInt("reimb_resolver"), ReimbursementStatus.valueOf(res.getString("reimb_status")), 
+					ReimbursementType.valueOf(res.getString("reimb_type")));
+		
+		return reimbursement;
+	}
+
 }

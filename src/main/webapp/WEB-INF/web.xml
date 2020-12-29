@@ -30,4 +30,14 @@
     <servlet-name>EmployeeServlet</servlet-name>
     <url-pattern>/reimbursements/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FinanceManagerServlet</display-name>
+    <servlet-name>FinanceManagerServlet</servlet-name>
+    <servlet-class>com.revature.servlets.FinanceManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FinanceManagerServlet</servlet-name>
+    <url-pattern>/manager/*</url-pattern>
+  </servlet-mapping>
 </web-app>

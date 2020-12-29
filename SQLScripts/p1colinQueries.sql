@@ -45,6 +45,14 @@ reimb_author, reimb_resolver, reimb_status, reimb_type
 from ers_reimbursement
 join ers_reimbursement_status using (reimb_status_id)
 join ers_reimbursement_type using (reimb_type_id)
+where reimb_id=1
+;
+
+select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
+reimb_author, reimb_resolver, reimb_status, reimb_type 
+from ers_reimbursement
+join ers_reimbursement_status using (reimb_status_id)
+join ers_reimbursement_type using (reimb_type_id)
 where reimb_author=1
 ;
 

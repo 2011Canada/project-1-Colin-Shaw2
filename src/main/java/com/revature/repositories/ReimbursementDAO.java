@@ -18,6 +18,8 @@ public interface ReimbursementDAO {
 	Reimbursement updateReimbursementStatus(Reimbursement reimbursement) throws SQLException;
 	
 	Reimbursement addReimbursement(Reimbursement reimbursement) throws SQLException;
+
+	Reimbursement getAllReimbursementsByID(int reimID) throws SQLException;;
 	
 	
 }
