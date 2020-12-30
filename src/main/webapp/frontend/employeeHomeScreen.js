@@ -66,16 +66,16 @@ async function getAllTickets(event){
 
 
 function createReimbursementRow(reimbursement, parentElement){
-    let li = document.createElement('div')
+    let listItem = document.createElement('div')
     let statusString = (reimbursement.status == 'PENDING')?'':` on ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}`
     
-    li.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}
+    listItem.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}
     $${reimbursement.amount} for ${reimbursement.type.toLowerCase()}
     ${reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1).toLowerCase()}${statusString}
     Desc: ${reimbursement.description}`
 
-    li.className = `list-group-item list-group-item-${reimbursement.status.toLowerCase()}`
-    parentElement.appendChild(li)
+    listItem.className = `card card-${reimbursement.status.toLowerCase()}`
+    parentElement.appendChild(listItem)
 }
 
 document.getElementById("reimbursementForm").addEventListener("submit", submitReimbursement)

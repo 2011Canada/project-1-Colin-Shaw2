@@ -34,7 +34,7 @@ function createReimbursementRow(reimbursement, parentElement){
     ${reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1).toLowerCase()}${statusString}
     Desc: ${reimbursement.description}`
 
-    listItem.className = `card card-${reimbursement.status.toLowerCase()} mb-4`
+    listItem.className = `card card-${reimbursement.status.toLowerCase()}`
     listItem.dataset.id = reimbursement.id;
 
     (reimbursement.status == 'PENDING')?addButtons(listItem):'';
