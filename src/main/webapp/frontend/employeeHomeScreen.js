@@ -42,19 +42,41 @@ async function getAllTickets(event){
         
         let reimbursements = await res.json()
         console.log(reimbursements);
+
+        document.getElementById("ticketList").innerHTML = ""
         
-        document.getElementById("reimbursementList").innerHTML = ""
+        let cardHeader = document.createElement("div");
+        cardHeader.className = "card-header"
+        cardHeader.innerText = "Previous Tickets"
+        document.getElementById("ticketList").appendChild(cardHeader)
+        
+        let ul = document.createElement("ul");
+        ul.className = "list-group list-group-flush"
+        ul.id = "reimbursementList"
+        document.getElementById("ticketList").appendChild(ul)
+        
+
         reimbursements.forEach(element => {
-            let lu = document.createElement('lu')
-            lu.innerText = element.amount
-            lu.className = "list-group-item"
-            document.getElementById("reimbursementList").appendChild(lu)
+            createReimbursementRow(element, document.getElementById("reimbursementList"))
         });
     } catch (e) {
         console.log(e);
     }
 }
 
+
+function createReimbursementRow(reimbursement, parentElement){
+    let lu = document.createElement('lu')
+    let statusString = (reimbursement.status == 'PENDING')?'':` on ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}`
+    
+    lu.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}
+    $${reimbursement.amount} for ${reimbursement.type.toLowerCase()}
+    ${reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1).toLowerCase()}${statusString}
+    Desc: ${reimbursement.description}`
+
+    lu.className = `list-group-item list-group-item-${reimbursement.status.toLowerCase()}`
+    parentElement.appendChild(lu)
+}
 
 document.getElementById("reimbursementForm").addEventListener("submit", submitReimbursement)
 

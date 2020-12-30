@@ -49,23 +49,23 @@
 
     <form id="filterForm">
       <div class="card">
+        <div class="card-header">Select Filter</div>
         <div class="form-group">
-          <div class="card-header">Select Filter</div>
           <select class="form-control" id="filterSelect" required>
             <option value="all">No Filter</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
             <option value="denied">Denied</option>
           </select>
-          <button type="submit" class="btn btn-primary" id="filterButton">
+          <button type="submit" class="btn btn-outline-dark" id="filterButton">
             Submit
           </button>
         </div>
       </div>
     </form>
 
-    <div class="card" style="width: 18rem">
-      <div class="card-header">Tickets</div>
+    <div class="card">
+      <div class="card-header">All Tickets</div>
       <ul class="list-group list-group-flush" id="reimbursementList"></ul>
     </div>
     <script src="financeManger.js"></script>

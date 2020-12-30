@@ -25,7 +25,7 @@ async function getAllTicketsByStatus(event){
 
             //add style
             let approveBut = document.createElement('button')
-            approveBut.className = "approve-button"
+            approveBut.className = "btn approve-button btn-outline-success"
             approveBut.innerText = "Approve"
 
             approveBut.addEventListener("click", async (event) =>{
@@ -52,7 +52,7 @@ async function getAllTicketsByStatus(event){
 
             //add style
             let declineBut = document.createElement('button')
-            declineBut.className = "decline-button"
+            declineBut.className = "btn decline-button btn-outline-danger"
             declineBut.innerText = "Decline"
 
             declineBut.addEventListener("click", async (event) =>{
