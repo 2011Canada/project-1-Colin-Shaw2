@@ -26,25 +26,49 @@ async function getAllTicketsByStatus(event){
 }
 
 function createReimbursementRow(reimbursement, parentElement){
-    let listItem = document.createElement('div')
-    let statusString = (reimbursement.status == 'PENDING')?'':` on ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}`
+    let card = document.createElement('div')
+    card.className = `card card-${reimbursement.status.toLowerCase()}`
+    card.dataset.id = reimbursement.id;
+
+    //header
+    let header = document.createElement('div')
+    header.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}`
+    header.className = "card-header"
+    card.append(header)
+
+//body
+    let body = document.createElement('div')
     
-    listItem.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}
-    $${reimbursement.amount} for ${reimbursement.type.toLowerCase()}
-    ${reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1).toLowerCase()}${statusString}
+    
+    
+    body.innerText = `$${reimbursement.amount} for ${reimbursement.type.toLowerCase()}
     Desc: ${reimbursement.description}`
+    
+    body.className = `card-body`
+    card.append(body)
+    
+    
+    let statusString = (reimbursement.status == 'PENDING')?'':` on ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}`
+//footer
+    if(reimbursement.status == 'PENDING'){
+        addButtons(card)
+    }
+    else{
+        let footer  = document.createElement('div')
+        footer.className = "card-footer"
+        footer.innerText = `${reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1).toLowerCase()}${statusString}`
+        card.append(footer)
+    }
 
-    listItem.className = `card card-${reimbursement.status.toLowerCase()}`
-    listItem.dataset.id = reimbursement.id;
-
-    (reimbursement.status == 'PENDING')?addButtons(listItem):'';
-
-    parentElement.appendChild(listItem)
+    parentElement.appendChild(card)
 }
 
 
-function addButtons(parent){
-    parent.appendChild(document.createElement('br'))
+function addButtons(card){
+    // card.appendChild(document.createElement('br'))
+    let footer  = document.createElement('div')
+    footer.className = "card-footer"
+
     let approveBut = document.createElement('button')
     approveBut.className = "btn approve-button btn-success"
     approveBut.innerText = "Approve"
@@ -68,7 +92,7 @@ function addButtons(parent){
         }
     )
 
-    parent.appendChild(approveBut)
+    footer.appendChild(approveBut)
 
     let declineBut = document.createElement('button')
     declineBut.className = "btn decline-button btn-danger"
@@ -92,7 +116,8 @@ function addButtons(parent){
         }
     )
     
-    parent.appendChild(declineBut)
+    footer.appendChild(declineBut)
+    card.appendChild(footer)
     
 }
 getAllTicketsByStatus()
