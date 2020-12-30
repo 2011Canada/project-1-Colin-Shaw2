@@ -45,11 +45,11 @@ body{
     margin-right: 0;
 }
 
-.card
+/* .card
 {
     margin-left: 5%;
     margin-right: 5%;
-}
+} */
 .form-group
 {
     margin-left: 1%;
@@ -63,13 +63,19 @@ body{
     margin: 2px;
 }
 
-.list-group-item-denied{
+.card-denied{
     background-color: lightcoral;
 }
 
-.list-group-item-approved{
+.card-approved{
     background-color: lightgreen;
 }
-.list-group-item-pending{
+.card-pending{
     background-color: lightblue;
+}
+
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: .5rem;
 }
