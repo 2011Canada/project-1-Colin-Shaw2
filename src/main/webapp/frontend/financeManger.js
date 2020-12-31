@@ -32,7 +32,8 @@ function createReimbursementRow(reimbursement, parentElement){
 
     //header
     let header = document.createElement('div')
-    header.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}`
+    header.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}
+    $${reimbursement.amount} for ${reimbursement.type.toLowerCase()}`
     header.className = "card-header"
     card.append(header)
 
@@ -41,8 +42,7 @@ function createReimbursementRow(reimbursement, parentElement){
     
     
     
-    body.innerText = `$${reimbursement.amount} for ${reimbursement.type.toLowerCase()}
-    Desc: ${reimbursement.description}`
+    body.innerText =  `Description: ${reimbursement.description}`
     
     body.className = `card-body`
     card.append(body)
@@ -120,5 +120,28 @@ function addButtons(card){
     card.appendChild(footer)
     
 }
+
+async function authenticateUser() {
+    try {
+      let res = await fetch("http://localhost:8080/p1colin/login/financemanager", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      let authorizationCheck = await res.text();
+      console.log(authorizationCheck);
+  
+      if ("athenticated" !== authorizationCheck) {
+        document.location.href = "login.html";
+      }
+    } catch (e) {
+      console.log(e);
+      document.location.href = "login.html";
+    }
+  }
+  
+  authenticateUser()
 getAllTicketsByStatus()
 document.getElementById("filterForm").addEventListener("submit", getAllTicketsByStatus)

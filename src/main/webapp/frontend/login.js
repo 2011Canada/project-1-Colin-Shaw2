@@ -21,11 +21,14 @@ async function loginSubmit(event){
                 "Content-Type" : "application/json"
             },
         })
+
+        if(res.status === 404){
+            alert("User Not Found")
+            throw "User not Found"
+        }
         
         let user = await res.json()
         
-        let h = await res.headers;
-        console.log(h);
         console.log(user);
 
         if(user.role === "EMPLOYEE"){

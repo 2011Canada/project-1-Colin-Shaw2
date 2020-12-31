@@ -11,8 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.enums.ReimbursementStatus;
+import com.revature.enums.UserRole;
+import com.revature.exceptions.AbstractHttpException;
+import com.revature.exceptions.InternalErrorException;
+import com.revature.exceptions.UnauthenticatedException;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.repositories.ReimbursementDAO;
@@ -37,16 +43,34 @@ public class FinanceManagerServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+		try{
 		// be our front controller
-		System.out.println("getting session");
+		authenticate(req, res);
+		
+		directGetRequest(req, res);
+	}
+		catch (AbstractHttpException e) {
+			res.setStatus(e.getStatusCode());
+			res.getWriter().write(e.getMessage());
+		}
+	}
+	
+	private HttpSession authenticate(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession sess = req.getSession(false);
-		System.out.println(sess);
-//		if(sess.getAttribute("User-Role") == null) {
-//			throw new UnauthenticatedException();
-//		} else if(!sess.getAttribute("User-Role").equals("Admin")) {
-//			throw new UnauthorizedException();
-//		}
+		System.out.println("Session is:" + sess);
+		if(sess == null) {
+			throw new UnauthenticatedException();
+		}
+		else if(sess.getAttribute("User-Role") == null) {
+			throw new UnauthenticatedException();
+		} else if(sess.getAttribute("User-Role") != UserRole.FINANCE_MANAGER) {
+			throw new UnauthorizedException();
+		}
+		return sess;
+	}
+	
+	private void directGetRequest(HttpServletRequest req, HttpServletResponse res) throws JsonProcessingException, IOException {
+
 		List<Reimbursement> allReimbursement = null;
 		String URI = req.getRequestURI().substring(req.getContextPath().length(), req.getRequestURI().length());
 
@@ -75,11 +99,12 @@ public class FinanceManagerServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new InternalErrorException();
 		}
 		res.setStatus(200);
 //		res.addHeader("Content-Type", "application/json");
 		if (allReimbursement == null) {
-			allReimbursement = new ArrayList<>();
+			throw new InternalErrorException();
 		}
 		res.getWriter().write(om.writeValueAsString(allReimbursement));
 	}
@@ -89,10 +114,9 @@ public class FinanceManagerServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("getting session");
-		HttpSession sess = req.getSession(false);
-		System.out.println(sess);
-		System.out.println("service controller");
+		try {
+		HttpSession sess = authenticate(req, res);
+		
 		Reimbursement r = null;
 		try {
 			String test = req.getReader().readLine();
@@ -109,13 +133,22 @@ public class FinanceManagerServlet extends HttpServlet {
 				r = fmService.denyReimbursement(reimID, (User)sess.getAttribute("user"));
 				break;
 			}
+			default:{
+				res.setStatus(400);
+				res.getWriter().write("Method Not Supported");
+			}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new InternalErrorException();
 		}
 		res.setStatus(200);
 		res.getWriter().write(om.writeValueAsString(r));
+		}
+		catch (AbstractHttpException e) {
+			res.setStatus(e.getStatusCode());
+			res.getWriter().write(e.getMessage());
+		}
 	}
 
 }
