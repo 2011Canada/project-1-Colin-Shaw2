@@ -81,7 +81,7 @@ function addButtons(card){
         let res = await fetch("http://localhost:8080/p1colin/manager/approvereq", {
             method:"POST",
             // body: `reimbursementid=1`,
-            body: `reimbursementid=${event.target.parentElement.dataset.id}`,
+            body: `reimbursementid=${event.target.parentElement.parentElement.dataset.id}`,
             headers:{
                 "Content-Type" : "application/json"
             },

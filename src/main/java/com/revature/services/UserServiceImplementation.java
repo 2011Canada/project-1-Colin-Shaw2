@@ -1,11 +1,10 @@
-package com.revature.controllers;
+package com.revature.services;
 
 import java.sql.SQLException;
 
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 import com.revature.repositories.UserPostgresDAO;
-import com.revature.services.UserServiceInterface;
 
 public class UserServiceImplementation implements UserServiceInterface {
 	

@@ -45,19 +45,8 @@ async function getAllTickets(event){
 
         document.getElementById("ticketList").innerHTML = ""
         
-        let cardHeader = document.createElement("div");
-        cardHeader.className = "card-header"
-        cardHeader.innerText = "Previous Tickets"
-        document.getElementById("ticketList").appendChild(cardHeader)
-        
-        let ul = document.createElement("ul");
-        ul.className = "list-group list-group-flush"
-        ul.id = "reimbursementList"
-        document.getElementById("ticketList").appendChild(ul)
-        
-
         reimbursements.forEach(element => {
-            createReimbursementRow(element, document.getElementById("reimbursementList"))
+            createReimbursementRow(element, document.getElementById("ticketList"))
         });
     } catch (e) {
         console.log(e);
@@ -66,16 +55,36 @@ async function getAllTickets(event){
 
 
 function createReimbursementRow(reimbursement, parentElement){
-    let listItem = document.createElement('div')
-    let statusString = (reimbursement.status == 'PENDING')?'':` on ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}`
-    
-    listItem.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}
-    $${reimbursement.amount} for ${reimbursement.type.toLowerCase()}
-    ${reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1).toLowerCase()}${statusString}
-    Desc: ${reimbursement.description}`
+    let card = document.createElement('div')
+    card.className = `card card-${reimbursement.status.toLowerCase()}`
+    card.dataset.id = reimbursement.id;
 
-    listItem.className = `card card-${reimbursement.status.toLowerCase()}`
-    parentElement.appendChild(listItem)
+    //header
+    let header = document.createElement('div')
+    header.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}`
+    header.className = "card-header"
+    card.append(header)
+
+//body
+    let body = document.createElement('div')
+    
+    
+    
+    body.innerText = `$${reimbursement.amount} for ${reimbursement.type.toLowerCase()}
+    Desc: ${reimbursement.description}`
+    
+    body.className = `card-body`
+    card.append(body)
+    
+    
+    let statusString = (reimbursement.status == 'PENDING')?'':` on ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}`
+//footer
+        let footer  = document.createElement('div')
+        footer.className = "card-footer"
+        footer.innerText = `${reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1).toLowerCase()}${statusString}`
+        card.append(footer)
+
+    parentElement.appendChild(card)
 }
 
 document.getElementById("reimbursementForm").addEventListener("submit", submitReimbursement)

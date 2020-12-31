@@ -14,10 +14,10 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.controllers.AuthController;
 import com.revature.controllers.ErrorController;
-import com.revature.controllers.UserServiceImplementation;
 import com.revature.enums.UserRole;
 import com.revature.models.Credentials;
 import com.revature.models.User;
+import com.revature.services.UserServiceImplementation;
 import com.revature.services.UserServiceInterface;
 import com.revature.controllers.EmployeeController;
 
