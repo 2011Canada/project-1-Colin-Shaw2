@@ -59,12 +59,9 @@ body{
     margin: 2px;
 }
 
-.approve-button, .decline-button {
-    margin: 0;
-}
 
 .card-deck .card{
-    text-align: center;
+    /* text-align: center; */
 }
 
 .card-deck .card .card-body{
@@ -89,14 +86,15 @@ body{
 
 .card-deck {
     display: grid;
-    height: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(250px, .25fr));
-    grid-gap: .5rem;
-    grid-auto-rows: 300px;
+    /* height: 100%; */
+    /* grid-template-columns: repeat(auto-fit, minmax(250px, .25fr)); */
+    grid-gap: .1rem;
+    /* grid-auto-rows: 300px; */
 }
 
 
 .card-deck .card .card-footer{
-    min-height: 10%;
-    max-height: 100px;
+    /* height: 20%; */
+    display: flex;
+    justify-content: start;
 }

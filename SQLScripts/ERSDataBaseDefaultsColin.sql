@@ -89,10 +89,10 @@ insert into ers_users(
 	'm.s@mail.ca',
 	1),
 	(
-	'eric',
-	'o',
-	'eric',
-	'os',
+	'alek',
+	'a',
+	'alek',
+	'somethin',
 	'e.o@mail.ca',
 	2),
 	(

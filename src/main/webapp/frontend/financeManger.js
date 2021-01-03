@@ -33,7 +33,7 @@ function createReimbursementRow(reimbursement, parentElement){
     //header
     let header = document.createElement('div')
     header.innerText = `Submitted on ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}
-    $${reimbursement.amount} for ${reimbursement.type.toLowerCase()}`
+    $${reimbursement.amount} for ${reimbursement.type.toLowerCase()}  by ${reimbursement.firstName.charAt(0).toUpperCase()}${reimbursement.firstName.slice(1).toLowerCase()} ${reimbursement.lastName.charAt(0).toUpperCase()}${reimbursement.lastName.slice(1).toLowerCase()}`
     header.className = "card-header"
     card.append(header)
 
@@ -88,6 +88,9 @@ function addButtons(card){
         })
 
         let newReimbursements = await res.json()
+        event.target.parentElement.parentElement.className = "card card-approved"
+        event.target.parentElement.innerText = "Approved"
+       
         console.log(newReimbursements)
         }
     )
@@ -105,13 +108,15 @@ function addButtons(card){
         
         let res = await fetch("http://localhost:8080/p1colin/manager/denyreq", {
             method:"POST",
-            body: `reimbursementid=${event.target.parentElement.dataset.id}`,
+            body: `reimbursementid=${event.target.parentElement.parentElement.dataset.id}`,
             headers:{
                 "Content-Type" : "application/json"
             },
         })
 
         let newReimbursements = await res.json()
+        event.target.parentElement.parentElement.className = "card card-denied"
+        event.target.parentElement.innerText = "Denied"
         console.log(newReimbursements)
         }
     )

@@ -26,34 +26,42 @@ using (user_role_id)
 where (ers_username like 'colin' and ers_password like 's');
 
 select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
-reimb_author, reimb_resolver, reimb_status, reimb_type 
+reimb_author, reimb_resolver, reimb_status, reimb_type , user_first_name, user_last_name
 from ers_reimbursement
 join ers_reimbursement_status using (reimb_status_id)
 join ers_reimbursement_type using (reimb_type_id)
+join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author
+order by reimb_submitted
 ;
 
 select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
-reimb_author, reimb_resolver, reimb_status, reimb_type 
+reimb_author, reimb_resolver, reimb_status, reimb_type , user_first_name, user_last_name
 from ers_reimbursement
 join ers_reimbursement_status using (reimb_status_id)
 join ers_reimbursement_type using (reimb_type_id)
+join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author
 where reimb_status like 'PENDING'
+order by reimb_submitted
 ;
 
 select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
-reimb_author, reimb_resolver, reimb_status, reimb_type 
+reimb_author, reimb_resolver, reimb_status, reimb_type , user_first_name, user_last_name
 from ers_reimbursement
 join ers_reimbursement_status using (reimb_status_id)
 join ers_reimbursement_type using (reimb_type_id)
+join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author
 where reimb_id=1
+order by reimb_submitted
 ;
 
 select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, 
-reimb_author, reimb_resolver, reimb_status, reimb_type 
+reimb_author, reimb_resolver, reimb_status, reimb_type, user_first_name, user_last_name
 from ers_reimbursement
 join ers_reimbursement_status using (reimb_status_id)
 join ers_reimbursement_type using (reimb_type_id)
+join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author
 where reimb_author=1
+order by reimb_submitted
 ;
 
 insert into ers_reimbursement 

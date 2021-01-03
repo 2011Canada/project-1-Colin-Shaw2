@@ -24,9 +24,12 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 		System.out.println("got conn");
 		List<Reimbursement> reimbursementList = new ArrayList<>();
 		String sql = "select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
-				+ "reimb_author, reimb_resolver, reimb_status, reimb_type from ers_reimbursement "
+				+ "reimb_author, reimb_resolver, reimb_status, reimb_type, user_first_name, user_last_name "
+				+ "from ers_reimbursement "
 				+ "join ers_reimbursement_status using (reimb_status_id) "
 				+ "join ers_reimbursement_type using (reimb_type_id) "
+				+ "join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author "
+				+ "order by reimb_submitted "
 				+ ";";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		ResultSet res = statement.executeQuery();
@@ -36,7 +39,7 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 			reimbursementList.add(new Reimbursement(res.getInt("reimb_id"), res.getDouble("reimb_amount"), 
 					res.getTimestamp("reimb_submitted"), res.getTimestamp("reimb_resolved"), res.getString("reimb_description"), 
 					res.getInt("reimb_author"), res.getInt("reimb_resolver"), ReimbursementStatus.valueOf(res.getString("reimb_status")), 
-					ReimbursementType.valueOf(res.getString("reimb_type"))));
+					ReimbursementType.valueOf(res.getString("reimb_type")), res.getString("user_first_name"), res.getString("user_last_name")));
 		}
 		if(reimbursementList.size() == 0) {
 			throw new SQLException();
@@ -48,11 +51,13 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 		Connection conn = cf.getConnection();
 		List<Reimbursement> reimbursementList = new ArrayList<>();
 		String sql = "select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
-				+ "reimb_author, reimb_resolver, reimb_status, reimb_type "
+				+ "reimb_author, reimb_resolver, reimb_status, reimb_type, user_first_name, user_last_name "
 				+ "from ers_reimbursement "
 				+ "join ers_reimbursement_status using (reimb_status_id) "
 				+ "join ers_reimbursement_type using (reimb_type_id) "
+				+ "join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author "
 				+ "where reimb_status like ? "
+				+ "order by reimb_submitted "
 				+ ";";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setString(1, status.toString());
@@ -63,10 +68,7 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 			reimbursementList.add(new Reimbursement(res.getInt("reimb_id"), res.getDouble("reimb_amount"), 
 					res.getTimestamp("reimb_submitted"), res.getTimestamp("reimb_resolved"), res.getString("reimb_description"), 
 					res.getInt("reimb_author"), res.getInt("reimb_resolver"), ReimbursementStatus.valueOf(res.getString("reimb_status")), 
-					ReimbursementType.valueOf(res.getString("reimb_type"))));
-		}
-		if(reimbursementList.size() == 0) {
-			throw new SQLException();
+					ReimbursementType.valueOf(res.getString("reimb_type")), res.getString("user_first_name"), res.getString("user_last_name")));
 		}
 		return reimbursementList;
 	}
@@ -75,11 +77,13 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 		Connection conn = cf.getConnection();
 		List<Reimbursement> reimbursementList = new ArrayList<>();
 		String sql = "select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
-				+ "reimb_author, reimb_resolver, reimb_status, reimb_type "
+				+ "reimb_author, reimb_resolver, reimb_status, reimb_type, user_first_name, user_last_name "
 				+ "from ers_reimbursement "
 				+ "join ers_reimbursement_status using (reimb_status_id) "
 				+ "join ers_reimbursement_type using (reimb_type_id) "
+				+ "join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author "
 				+ "where reimb_author= ? "
+				+ "order by reimb_submitted "
 				+ ";";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setInt(1, user.getUserId());
@@ -90,10 +94,7 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 			reimbursementList.add(new Reimbursement(res.getInt("reimb_id"), res.getDouble("reimb_amount"), 
 					res.getTimestamp("reimb_submitted"), res.getTimestamp("reimb_resolved"), res.getString("reimb_description"), 
 					res.getInt("reimb_author"), res.getInt("reimb_resolver"), ReimbursementStatus.valueOf(res.getString("reimb_status")), 
-					ReimbursementType.valueOf(res.getString("reimb_type"))));
-		}
-		if(reimbursementList.size() == 0) {
-			throw new SQLException();
+					ReimbursementType.valueOf(res.getString("reimb_type")), res.getString("user_first_name"), res.getString("user_last_name")));
 		}
 		return reimbursementList;
 	}
@@ -165,24 +166,26 @@ public class ReimbursementPostgresDAO implements ReimbursementDAO {
 	public Reimbursement getAllReimbursementsByID(int reimID) throws SQLException {
 		Connection conn = cf.getConnection();
 		String sql = "select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
-				+ "reimb_author, reimb_resolver, reimb_status, reimb_type "
+				+ "reimb_author, reimb_resolver, reimb_status, reimb_type, user_first_name, user_last_name "
 				+ "from ers_reimbursement "
 				+ "join ers_reimbursement_status using (reimb_status_id) "
 				+ "join ers_reimbursement_type using (reimb_type_id) "
+				+ "join ers_users on ers_users.ers_users_id = ers_reimbursement.reimb_author "
 				+ "where reimb_id=? "
+				+ "order by reimb_submitted "
 				+ ";";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setInt(1, reimID);
 		ResultSet res = statement.executeQuery();
 
 		if(!res.next()) {
-			throw new SQLException();
+			throw new SQLException();	
 		}
 		
 		Reimbursement reimbursement = new Reimbursement(res.getInt("reimb_id"), res.getDouble("reimb_amount"), 
 					res.getTimestamp("reimb_submitted"), res.getTimestamp("reimb_resolved"), res.getString("reimb_description"), 
 					res.getInt("reimb_author"), res.getInt("reimb_resolver"), ReimbursementStatus.valueOf(res.getString("reimb_status")), 
-					ReimbursementType.valueOf(res.getString("reimb_type")));
+					ReimbursementType.valueOf(res.getString("reimb_type")), res.getString("user_first_name"), res.getString("user_last_name"));
 		
 		return reimbursement;
 	}

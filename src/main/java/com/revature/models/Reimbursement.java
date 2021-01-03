@@ -16,6 +16,8 @@ public class Reimbursement {
 	private Integer resolverID;
 	private ReimbursementStatus status;
 	private ReimbursementType type;
+	private String firstName;
+	private String lastName;
 	
 	public Reimbursement() {
 		this.id = -1;
@@ -27,7 +29,7 @@ public class Reimbursement {
 	}
 	
 	public Reimbursement(int id, double amount, Timestamp submitted, Timestamp resolved, String description, Integer authorID,
-			Integer resolverID, ReimbursementStatus status, ReimbursementType type) {
+			Integer resolverID, ReimbursementStatus status, ReimbursementType type, String firstName, String lastName) {
 		super();
 		this.id = id;
 		this.amount = amount;
@@ -38,7 +40,25 @@ public class Reimbursement {
 		this.resolverID = resolverID;
 		this.status = status;
 		this.type = type;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	public int getId() {
 		return id;
 	}

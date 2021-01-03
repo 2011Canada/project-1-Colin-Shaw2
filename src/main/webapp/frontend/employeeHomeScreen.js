@@ -23,6 +23,7 @@ async function submitReimbursement(event) {
     let reimbursement = await res.json();
     console.log(reimbursement);
     alert("Reimbursement Submitted")
+    document.getElementById("reimbursementForm").reset();
   } catch (e) {
     console.log(e);
   }
