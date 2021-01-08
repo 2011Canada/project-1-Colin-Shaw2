@@ -1,12 +1,13 @@
-## Colin's Expense Reimbursement System
-# An Explanation and Overview of the project, 
+# Colin's Expense Reimbursement System
 
-# List of features implemented, 
+### An expense Reimbursement System that allows employees to create new reimbursement requests and allow finance managers to review approve and deny them
 
-# Technologies used, 
+### List of features implemented,
 
-# How to set up / get started using it, 
+### Technologies used, 
 
-# Usage of the project, 
+### How to set up / get started using it, 
 
-# Contributors and License information.
+### Usage of the project, 
+
+### Contributors and License information.
