@@ -2,7 +2,7 @@
 
 ## An expense Reimbursement System that allows employees to create new reimbursement requests and allow finance managers to review and approve and deny them.  This project uses a tomcat cat server to run the back end and basic Js/Css/Html on the front end to send HTTP requests to the server.  All data is persisted in a postgreSQL database deployed to on AWS using the RDS service.
 
-### List of features implemented,
+## List of features implemented,
   - employees can add new reimbursement requests
   - employees can view past requests and their status
   - finance managers can view all requests and approve or deny them
