@@ -10,11 +10,11 @@
   
 ### Technologies used
   - Javascript
-  - css
-  - html
+  - Css
+  - Html
   - Fetch API
   - Java
-  - jdbc
+  - Jdbc
   
 
 ### Set up
