@@ -1,3 +1,4 @@
+set database quickqueue;
 drop schema if exists project1colin cascade;
 create schema project1colin;
 set schema 'project1colin';
